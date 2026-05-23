@@ -124,6 +124,9 @@ router.get('/state', verifyToken, async (req, res) => {
       };
     });
 
+    // Dynamic evidence total from DB (consistent with /action endpoint)
+    const totalClues = await Evidence.countDocuments() || 13;
+
     res.json({
       player: formatPlayer(player),
       narrative: {
@@ -137,7 +140,7 @@ router.get('/state', verifyToken, async (req, res) => {
       combat: formatCombat(session.combat),
       evidence: {
         collected: player.narrativeState?.evidenceBoard?.collected || [],
-        total: 12,
+        total: totalClues,
         completionPercent: player.narrativeState?.evidenceBoard?.completionPercent || 0
       }
     });

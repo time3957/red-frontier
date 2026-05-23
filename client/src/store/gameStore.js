@@ -60,7 +60,7 @@ const useGameStore = create(
     // ─── Evidence ─────────────────────────────────────────
     evidence: {
       collected: [],
-      total: 12,
+      total: 13,
       completionPercent: 0,
       connections: [],
       narrativeLayers: [],
@@ -261,7 +261,7 @@ useGameStore.getInitialState = () => ({
     log: [], initiativeOrder: [], lastResult: null,
   },
   evidence: {
-    collected: [], total: 12, completionPercent: 0,
+    collected: [], total: 13, completionPercent: 0,
     connections: [], narrativeLayers: [], board: [],
   },
 })
