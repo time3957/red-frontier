@@ -1,0 +1,334 @@
+/* ─── NarrativePanel.module.css ─────────────────────────── */
+
+.panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg2);
+  border-left: 2px solid var(--atm-color, var(--accent));
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.5s ease;
+}
+
+/* Atmosphere top line */
+.atmLine {
+  height: 2px;
+  width: 100%;
+  opacity: 0.6;
+  transition: background 0.5s ease;
+  flex-shrink: 0;
+}
+
+/* ─── Header ─────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 12px;
+  background: rgba(10, 12, 14, 0.5);
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.locationName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+}
+
+.locationIcon {
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.atmosphereBadge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.5s ease;
+}
+
+/* ─── Text Area ──────────────────────────────────────── */
+.textArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  position: relative;
+  min-height: 0;
+}
+
+.narrativeText {
+  max-width: 680px;
+}
+
+.narrativeText p {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--text);
+  white-space: pre-wrap;
+  letter-spacing: 0.01em;
+}
+
+/* Empty state */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 120px;
+  gap: 12px;
+  opacity: 0.4;
+}
+
+.emptyIcon {
+  font-size: 2.5rem;
+  color: var(--accent);
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.emptyText {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text2);
+  text-align: center;
+}
+
+.emptySubtext {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+}
+
+/* ─── Choices ────────────────────────────────────────── */
+.choices {
+  border-top: 1px solid var(--border);
+  padding: 16px;
+  flex-shrink: 0;
+  background: rgba(10, 12, 14, 0.3);
+  animation: fade-in 0.3s ease;
+}
+
+.choicesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.choicesTitle {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+}
+
+.choicesHint {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  font-style: italic;
+}
+
+.choicesList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.choiceBtn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.choiceBtn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+.choiceBtn:hover {
+  border-color: var(--border3);
+  background: rgba(30, 36, 40, 0.8);
+  transform: translateX(3px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.choiceBtn:hover::before {
+  transform: scaleY(1);
+}
+
+.choiceBtn:active {
+  transform: translateX(2px);
+  border-color: var(--accent);
+}
+
+.choiceDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.choiceDisabled:hover {
+  transform: none;
+  border-color: var(--border);
+}
+
+.choiceDisabled:hover::before {
+  transform: scaleY(0);
+}
+
+.choiceArrow {
+  color: var(--accent);
+  font-size: 0.65rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.choiceBtn:hover .choiceArrow {
+  opacity: 1;
+}
+
+.choiceText {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--text2);
+  line-height: 1.4;
+  transition: color 0.2s;
+}
+
+.choiceBtn:hover .choiceText {
+  color: var(--text);
+}
+
+.choiceReqBadge {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 1px;
+}
+
+.choiceDiffBadge {
+  flex-shrink: 0;
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid currentColor;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  padding: 1px 5px;
+  border-radius: 2px;
+  margin-top: 1px;
+}
+
+/* ─── Loading Choices ────────────────────────────────── */
+.loadingChoices {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* ─── Combat Log Preview ─────────────────────────────── */
+.combatLogPreview {
+  border-top: 1px solid var(--border);
+  padding: 10px 16px;
+  flex-shrink: 0;
+  background: rgba(8, 10, 12, 0.5);
+}
+
+.combatLogTitle {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.combatLogEntry {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.combatLogIcon {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.log_player { color: var(--accent2); }
+.log_enemy  { color: #ff6060; }
+.log_system { color: var(--text3); }
+.log_crit   { color: var(--yellow); font-weight: 600; }
+
+/* ─── Corner Decor ───────────────────────────────────── */
+.cornerDecorTR {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid var(--atm-color, var(--accent));
+  border-right: 2px solid var(--atm-color, var(--accent));
+  transition: border-color 0.5s;
+}

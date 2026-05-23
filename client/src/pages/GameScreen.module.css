@@ -1,0 +1,391 @@
+/* ─── GameScreen.module.css ─────────────────────────────── */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  position: relative;
+}
+
+/* ─── Main Layout ────────────────────────────────────── */
+.main {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 240px 1fr;
+  }
+}
+
+/* ─── Left Panel ─────────────────────────────────────── */
+.leftPanel {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--bg2);
+  position: relative;
+}
+
+/* ─── Location Scene ─────────────────────────────────── */
+.locationScene {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+}
+
+.sceneContent {
+  position: absolute;
+  inset: 0;
+}
+
+.sceneOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 12, 14, 0.1) 0%,
+    transparent 30%,
+    transparent 60%,
+    rgba(10, 12, 14, 0.6) 100%
+  );
+}
+
+.sceneVignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 12, 14, 0.5) 100%);
+}
+
+/* Scene variants */
+.scene_base .sceneContent {
+  background: radial-gradient(ellipse at 50% 100%,
+    rgba(180, 60, 10, 0.3) 0%,
+    rgba(80, 30, 10, 0.2) 40%,
+    rgba(10, 12, 14, 0.8) 100%
+  );
+}
+
+.scene_surface .sceneContent {
+  background: radial-gradient(ellipse at 40% 80%,
+    rgba(210, 100, 30, 0.4) 0%,
+    rgba(140, 60, 20, 0.3) 40%,
+    rgba(20, 15, 10, 0.9) 100%
+  );
+}
+
+.scene_interior .sceneContent {
+  background: radial-gradient(ellipse at 80% 30%,
+    rgba(42, 122, 191, 0.2) 0%,
+    rgba(10, 20, 40, 0.6) 50%,
+    rgba(10, 12, 14, 0.95) 100%
+  );
+}
+
+.scene_underground .sceneContent {
+  background: radial-gradient(ellipse at 50% 50%,
+    rgba(80, 40, 10, 0.4) 0%,
+    rgba(20, 10, 5, 0.8) 60%,
+    rgba(5, 5, 5, 0.98) 100%
+  );
+}
+
+.scene_habitat .sceneContent {
+  background: radial-gradient(ellipse at 30% 60%,
+    rgba(58, 158, 106, 0.12) 0%,
+    rgba(30, 60, 40, 0.2) 40%,
+    rgba(10, 12, 14, 0.9) 100%
+  );
+}
+
+.sceneBg_base,
+.sceneBg_surface,
+.sceneBg_interior,
+.sceneBg_underground,
+.sceneBg_habitat {
+  position: absolute;
+  inset: 0;
+}
+
+.sceneHorizon {
+  position: absolute;
+  bottom: 35%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 92, 32, 0.3), transparent);
+}
+
+.sceneElement {
+  position: absolute;
+  color: rgba(232, 92, 32, 0.4);
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 8px rgba(232, 92, 32, 0.3));
+  animation: flicker 6s infinite;
+}
+
+.sceneStar {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.6rem;
+}
+
+.sceneDustCloud {
+  position: absolute;
+  bottom: 30%;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: radial-gradient(ellipse at 50% 100%,
+    rgba(180, 100, 40, 0.15) 0%, transparent 70%);
+  animation: scan-line 20s linear infinite;
+}
+
+.sceneGrid_interior {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(42, 122, 191, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 122, 191, 0.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.sceneLabel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 8px 12px;
+}
+
+.sceneLabelText {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent2);
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 10px rgba(232, 92, 32, 0.8);
+}
+
+/* ─── Mini Map ───────────────────────────────────────── */
+.miniMap {
+  border-top: 1px solid var(--border);
+  padding: 10px 12px;
+  background: var(--bg);
+}
+
+.miniMapTitle {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.miniMapCanvas {
+  position: relative;
+  height: 70px;
+  background: rgba(255, 120, 40, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.miniMapSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.miniMapZone {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.miniMapDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: all 0.3s;
+}
+
+.miniMapCurrent .miniMapDot {
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(232, 92, 32, 0.8);
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.miniMapLabel {
+  font-family: var(--mono);
+  font-size: 0.45rem;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.miniMapCurrent .miniMapLabel {
+  color: var(--accent2);
+}
+
+/* ─── Status Icons ───────────────────────────────────── */
+.statusIcons {
+  border-top: 1px solid var(--border);
+  padding: 8px 12px;
+}
+
+.statusIconsTitle {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.statusIconsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.statusIcon {
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+}
+
+.statusHazard {
+  background: rgba(200, 138, 32, 0.1);
+  border: 1px solid rgba(200, 138, 32, 0.25);
+  color: #e8a840;
+}
+
+.statusEffect {
+  background: rgba(138, 74, 191, 0.1);
+  border: 1px solid rgba(138, 74, 191, 0.25);
+  color: #c080ff;
+}
+
+/* ─── Right Panel ────────────────────────────────────── */
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Loading State ──────────────────────────────────── */
+.loadingState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.loadingText {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  animation: flicker 2s infinite;
+}
+
+/* ─── Bottom Action Bar ──────────────────────────────── */
+.actionBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  background: rgba(10, 12, 14, 0.95);
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+}
+
+.actionBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionBarLabel {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+}
+
+.actionBarCenter {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBarRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.evidenceBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.evidenceIcon {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+/* ─── Error Toast ────────────────────────────────────── */
+.errorToast {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(80, 15, 15, 0.95);
+  border: 1px solid rgba(191, 42, 42, 0.5);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #ff8080;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  z-index: 500;
+  backdrop-filter: blur(8px);
+  animation: slide-up 0.3s ease forwards;
+  max-width: 500px;
+  letter-spacing: 0.04em;
+}
+
+.errorClose {
+  margin-left: auto;
+  opacity: 0.6;
+  font-size: 0.8rem;
+}
+
+.errorClose:hover { opacity: 1; }

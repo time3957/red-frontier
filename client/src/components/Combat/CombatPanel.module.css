@@ -1,0 +1,521 @@
+/* ─── CombatPanel.module.css ─────────────────────────────── */
+
+.panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg2);
+  border-left: 2px solid var(--red);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(191, 42, 42, 0.3);
+  background: rgba(80, 10, 10, 0.2);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.combatTitle {
+  font-family: var(--cond);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ff6060;
+  text-shadow: 0 0 12px rgba(191, 42, 42, 0.6);
+}
+
+.roundBadge {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  padding: 2px 8px;
+  border: 1px solid rgba(191, 42, 42, 0.2);
+  border-radius: 2px;
+  background: rgba(80, 10, 10, 0.3);
+  letter-spacing: 0.08em;
+}
+
+.turnIndicator {
+  margin-left: auto;
+}
+
+.turnPlayer {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent2);
+  letter-spacing: 0.12em;
+  padding: 4px 12px;
+  border: 1px solid rgba(232, 92, 32, 0.4);
+  border-radius: 2px;
+  background: rgba(232, 92, 32, 0.08);
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.turnEnemy {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #ff6060;
+  letter-spacing: 0.12em;
+  padding: 4px 12px;
+  border: 1px solid rgba(191, 42, 42, 0.4);
+  border-radius: 2px;
+  background: rgba(191, 42, 42, 0.08);
+}
+
+/* ─── Initiative Order ───────────────────────────────── */
+.initiative {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.initiativeTitle {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+}
+
+.initiativeList {
+  display: flex;
+  gap: 4px;
+}
+
+.initiativeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px 7px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.initiativeCurrent {
+  border-color: var(--accent);
+  background: rgba(232, 92, 32, 0.1);
+}
+
+.initiativeRank {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  color: var(--text3);
+}
+
+.initiativeName {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text2);
+  white-space: nowrap;
+}
+
+.initiativeVal {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: var(--accent);
+}
+
+.initiativeCurrent .initiativeName {
+  color: var(--accent2);
+}
+
+/* ─── Body ───────────────────────────────────────────── */
+.body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .body { grid-template-columns: 1fr; overflow-y: auto; }
+}
+
+/* ─── Enemies ────────────────────────────────────────── */
+.enemies {
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 12px;
+  gap: 8px;
+}
+
+.sectionTitle {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.12em;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+.enemyList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.noEnemies {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+  text-align: center;
+  padding: 20px;
+}
+
+/* ─── Enemy Card ─────────────────────────────────────── */
+.enemyCard {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.enemyCard:hover {
+  border-color: rgba(191, 42, 42, 0.5);
+  background: rgba(80, 10, 10, 0.1);
+}
+
+.enemySelected {
+  border-color: #ff4444 !important;
+  background: rgba(80, 10, 10, 0.2) !important;
+  box-shadow: 0 0 12px rgba(191, 42, 42, 0.3) !important;
+}
+
+.enemyDead {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+.deadOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 5, 0.6);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--red);
+  z-index: 2;
+}
+
+.enemyHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.enemyIcon { font-size: 1.2rem; line-height: 1; flex-shrink: 0; }
+
+.enemyInfo { flex: 1; }
+
+.enemyName {
+  font-family: var(--cond);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.enemyType {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: #ff6060;
+  letter-spacing: 0.08em;
+}
+
+.targetIndicator {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  animation: pulse-glow 1s ease-in-out infinite;
+}
+
+.enemyStat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.enemyStatLabel {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--text3);
+  min-width: 16px;
+}
+
+.enemyBarTrack {
+  flex: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.enemyBarFillHp {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.enemyBarFillSi {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #1a3a6a, var(--blue), #4a9aff);
+  transition: width 0.5s ease;
+}
+
+.enemyStatVal {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--text3);
+  min-width: 36px;
+  text-align: right;
+}
+
+.enemyStatus {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+/* ─── Right Column ───────────────────────────────────── */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0;
+}
+
+/* ─── Action Section ─────────────────────────────────── */
+.actionSection {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.actionBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text2);
+}
+
+.actionBtn:hover {
+  border-color: var(--action-color, var(--accent));
+  color: var(--action-color, var(--accent));
+  background: rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.actionSelected {
+  border-color: var(--action-color, var(--accent)) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  color: var(--action-color, var(--accent)) !important;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+.actionIcon {
+  font-size: 1.1rem;
+}
+
+.actionLabel {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+}
+
+.targetHint {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--yellow);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.executeBtn {
+  width: 100%;
+  justify-content: center;
+  font-size: 0.8rem;
+  padding: 10px;
+}
+
+/* ─── Wait Section ───────────────────────────────────── */
+.waitSection {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.waitIcon {
+  font-size: 1.5rem;
+  color: #ff6060;
+  animation: pulse-glow 1s ease-in-out infinite;
+}
+
+.waitText {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #ff6060;
+  letter-spacing: 0.08em;
+  animation: flicker 1.5s ease-in-out infinite;
+}
+
+/* ─── Combat Log ─────────────────────────────────────── */
+.combatLog {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 10px 12px;
+}
+
+.logTitle {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.12em;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.logEntries {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.logEmpty {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text3);
+  font-style: italic;
+}
+
+.logEntry {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  transition: opacity 0.3s;
+}
+
+.logIcon { flex-shrink: 0; }
+
+.log_player { color: var(--accent2); }
+.log_enemy  { color: #ff6060; }
+.log_system { color: var(--text3); }
+.log_crit   { color: var(--yellow); font-weight: bold; }
+
+/* ─── Result Overlay ─────────────────────────────────── */
+.resultOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px;
+  backdrop-filter: blur(6px);
+  animation: fade-in 0.4s ease;
+}
+
+.resultVictory {
+  background: rgba(8, 20, 12, 0.9);
+  border: 2px solid rgba(58, 158, 106, 0.4);
+}
+
+.resultDefeat {
+  background: rgba(20, 5, 5, 0.9);
+  border: 2px solid rgba(191, 42, 42, 0.4);
+}
+
+.resultIcon {
+  font-size: 3rem;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.resultVictory .resultIcon { color: var(--yellow); }
+.resultDefeat  .resultIcon { color: var(--red); }
+
+.resultTitle {
+  font-family: var(--cond);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.resultVictory .resultTitle { color: #80d0a0; }
+.resultDefeat  .resultTitle { color: #ff6060; }
+
+.resultText {
+  font-size: 0.9rem;
+  color: var(--text2);
+  text-align: center;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.resultRewards {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
