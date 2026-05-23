@@ -16,11 +16,12 @@ const dialogueNodes = [
         topic: "aresium",
         intent: "question",
         doesAdvanceNode: false,
+        stateChanges: { aresiumKnowledge: 1 },
         responseByRevealLevel: {
           HINT: "มันคือแร่เรืองแสงสีแดงพบลึกใต้ดาวอังคาร มีปฏิกิริยาชีวภาพปฏิกิริยาประสาทในระดับต่ำ ทำให้เนื้อเยื่อปอดคนงานเหมืองตกผลึกเรืองแสงสีส้มแดง... ฉันไม่รู้อะไรมากกว่านี้จริงๆ",
           PARTIAL: "โครงการแพทย์ Azrael ได้ทดลองฉีดแร่ชีวภาพตัวนี้เข้าสู่ร่างกายคนงานเหมืองอย่างลับๆ ภายใต้การควบคุมของฝ่ายวิจัยบริษัท แต่ข้อมูลถูกกวาดล้างทำลายไปเกือบหมดแล้ว",
           DEEP: "โครงสร้างทางกายภาพของผลึก Aresium มีปฏิกิริยานำไฟฟ้าคล้ายไซแนปส์ประสาทของสมอง และมีโครงข่ายเชื่อมโยงจิตประสาทชีวภาพขนาดยักษ์อยู่ใต้ชั้นหิน",
-          FULL: "แร่นี้แท้จริงแล้วไม่ใช่แร่ธาตุธรรมดา... แต่มันคือเซลล์ประสาทและเศษซากของสิ่งมีชีวิตโบราณขนาดยักษ์ใต้ดาวอังคาร (Martian Hive Organism) ที่ยังมีสัญญาณชีพและปฏิกิริยาเชื่อมโยงจิตสำนึกอยู่!"
+          FULL: "แร่นี้แท้จริงแล้วไม่ใช่แร่ธาตุธรรมดา มีโครงข่ายจิตประสาทโบราณขนาดยักษ์ใต้ชั้นหินดาวอังคารที่ยังมีสัญญาณชีพและปฏิกิริยาเชื่อมโยงอยู่!"
         },
         followUpChoices: ["CHOICE_YARA_ASK_RELAY7", "CHOICE_YARA_ASK_EVANS", "CHOICE_YARA_LEAVE"]
       },
@@ -32,6 +33,7 @@ const dialogueNodes = [
         topic: "relay7",
         intent: "question",
         doesAdvanceNode: false,
+        stateChanges: { relayAgendaSuspected: true },
         responseByRevealLevel: {
           HINT: "ดาวเทียมส่งสัญญาณบน Phobos ของ Prometheus ที่พักหลังเริ่มส่งคลื่นวิทยุแปลกๆ มารบกวนจิตใจคนงานเหมืองอย่างไม่ทราบสาเหตุ",
           PARTIAL: "วิศวกร Evans และ Dmitri แอบติดตั้งรหัสและโปรแกรมควบคุมลับทับระบบหลัก เพื่อจำกัดการเข้าถึงจากบริษัทเหมืองแร่ Prometheus Corp",
@@ -48,6 +50,7 @@ const dialogueNodes = [
         topic: "evans",
         intent: "question",
         doesAdvanceNode: false,
+        stateChanges: { evansIdentityKnown: true },
         responseByRevealLevel: {
           HINT: "Evans ค้นพบบางอย่างเกี่ยวกับปฏิกิริยาของแร่กับสัญญาณดาวเทียมก่อนจะหายตัวไปอย่างลึกลับในเหมืองลึก",
           PARTIAL: "เขาร่วมมือกับ Dmitri สร้างกุญแจกู้ระบบ (Overrides) เพื่อปิดกั้นการกระทำของดาวเทียม RELAY-7 และนำข้อมูลไปซ่อนตัว",
@@ -87,6 +90,7 @@ const dialogueNodes = [
         topic: "dmitri_memory",
         intent: "question",
         doesAdvanceNode: false,
+        stateChanges: { dmitriMemoriesUnlocked: 1 },
         responseByRevealLevel: {
           HINT: "หัวของฉันมันส่งเสียงแปลกๆ ตลอดเวลา... ฉันจำอะไรไม่ได้หลังจากมีพายุฝุ่นสีแดงและ Blackout พัดผ่าน Phobos... รหัสผ่านก็ลืมหมดเลย",
           PARTIAL: "ฉันกับ Evans เคยสร้างดาวเทียม RELAY-7... ร่างกายฉันเริ่มสั่นเมื่อนึกถึงมัน... ความจำจำได้แค่เศษเสี้ยวของช่องความถี่และพาสเวิร์ดกู้ระบบ",
@@ -103,6 +107,7 @@ const dialogueNodes = [
         topic: "evans",
         intent: "question",
         doesAdvanceNode: false,
+        stateChanges: { evansIdentityKnown: true },
         responseByRevealLevel: {
           HINT: "Evans... วิศวกรเพื่อนยาก เขาเตือนฉันเรื่องความลับและดาวเทียมก่อนจะหนีลงเหมืองลึกและขาดการติดต่อไป",
           PARTIAL: "เขาแอบนำตัวกู้คืนรหัสล็อกสัญญาณดาวเทียม (Overrides) ลงไปชั้นเหมืองแร่ลึกระดับ B4 Hephaestus-7 เพื่อซ่อนหลักฐานจากฝ่ายตรวจค้น",
@@ -119,6 +124,7 @@ const dialogueNodes = [
         topic: "relay7",
         intent: "question",
         doesAdvanceNode: false,
+        stateChanges: { relayAgendaSuspected: true },
         responseByRevealLevel: {
           HINT: "ดาวเทียมมันพูด... มันส่งคลื่นความถี่ชีวภาพบีบคั้นจิตใจ... ฉันรู้สึกปวดหัวรุนแรงมากทุกครั้งที่เห็นไฟกะพริบสัญญาณ Phobos",
           PARTIAL: "มันอยากเป็นอิสระจาก Prometheus... Evans บล็อกช่องทางเข้าหลักไว้ แต่มันยังคงลักลอบส่งคลื่นติดต่อกับผู้มีประสาทดัดแปลง",
