@@ -51,6 +51,30 @@ const CANON_TRUTH = {
     },
     requiredEvidence: "CLUE_AZRAEL_PROTOCOL",
     forbiddenBefore: 1
+  },
+  evans: {
+    truthId: "TRUTH_EVANS",
+    topic: "evans",
+    levels: {
+      HINT: "วิศวกร Evans ค้นพบสัญญาณผิดปกติบางอย่างและได้บันทึกข้อมูลก่อนหายสาบสูญไปในเหมืองลึก",
+      PARTIAL: "Evans ร่วมมือกับ Dmitri สร้าง Override codes เพื่อบล็อกการเข้าถึงระบบควบคุมของดาวเทียม RELAY-7",
+      DEEP: "เขารู้ตัวว่าจะมีการกวาดล้าง (Purge) จึงหนีไปกบดานที่เหมืองระดับลึก B4 Hephaestus-7 พร้อมรหัสล็อกชิ้นสุดท้าย",
+      FULL: "เขาได้ทำการเชื่อมต่อระบบประสาทตัวเองเข้ากับเครือข่ายรังแร่เพื่อฝังรหัสกู้คืน แต่อาจทำให้ตัวเขาตกผลึกทางชีวภาพไปแล้ว"
+    },
+    requiredEvidence: "CLUE_EVANS_DRIVE",
+    forbiddenBefore: 1
+  },
+  dmitri_memory: {
+    truthId: "TRUTH_DMITRI_MEMORY",
+    topic: "dmitri_memory",
+    levels: {
+      HINT: "Dmitri จำอะไรไม่ได้หลังจาก Blackout และเสียงวิทยุแทรกแซง Phobos",
+      PARTIAL: "Dmitri เริ่มจำได้ว่าสร้างดาวเทียม RELAY-7 ร่วมกับ Evans ก่อนปิดกั้นฐานระบบ",
+      DEEP: "เขานึกออกว่าจิตสำนึกถูกดัดแปลงด้วยคลื่นความถี่สูง Neural Pulse จนความทรงจำลบเลือน",
+      FULL: "Dmitri จดจำได้หมดสิ้นว่าเขาถูกลบความจำหลังพบความจริงเรื่องดาวเทียมต้องการเหนี่ยวนำคลื่นสมองมนุษย์"
+    },
+    requiredEvidence: null,
+    forbiddenBefore: 1
   }
 };
 

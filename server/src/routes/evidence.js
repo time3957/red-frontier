@@ -60,12 +60,13 @@ router.get('/board', verifyToken, async (req, res) => {
       }
     });
 
-    const completionPercent = Math.round((collected.length / 12) * 100);
+    const total = allClues.length || 12;
+    const completionPercent = Math.round((collected.length / total) * 100);
     const narrativeLayers = getUnlockedLayers(collected.length);
 
     res.json({
       collected,
-      total: 12,
+      total,
       connections,
       completionPercent,
       narrativeLayers,
@@ -110,8 +111,9 @@ router.post('/collect/:clueId', verifyToken, async (req, res) => {
       isNew = true;
     }
 
+    const totalClues = await Evidence.countDocuments() || 12;
     player.narrativeState.evidenceBoard.completionPercent = Math.round(
-      (player.narrativeState.evidenceBoard.collected.length / 12) * 100
+      (player.narrativeState.evidenceBoard.collected.length / totalClues) * 100
     );
 
     player.markModified('narrativeState');

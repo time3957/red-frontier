@@ -152,7 +152,7 @@ const updateKnowledgeStateFromEvidence = (evidenceId, player) => {
       knownFacts: [],
       suspectedFacts: [],
       unknownFacts: [],
-      revealLevels: { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE' }
+      revealLevels: { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE', evans: 'NONE', dmitri_memory: 'NONE' }
     };
   }
 
@@ -160,7 +160,7 @@ const updateKnowledgeStateFromEvidence = (evidenceId, player) => {
   if (!kState.knownFacts) kState.knownFacts = [];
   if (!kState.suspectedFacts) kState.suspectedFacts = [];
   if (!kState.revealLevels) {
-    kState.revealLevels = { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE' };
+    kState.revealLevels = { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE', evans: 'NONE', dmitri_memory: 'NONE' };
   }
 
   // Map evidence to topics
@@ -168,7 +168,8 @@ const updateKnowledgeStateFromEvidence = (evidenceId, player) => {
     CLUE_ARESIUM_SAMPLE: 'aresium',
     CLUE_RELAY7_CONTACT: 'relay7',
     CLUE_VASQUEZ_WARNING: 'isuComplicity',
-    CLUE_AZRAEL_PROTOCOL: 'aresProtocol'
+    CLUE_AZRAEL_PROTOCOL: 'aresProtocol',
+    CLUE_EVANS_DRIVE: 'evans'
   };
 
   const topic = evidenceTopicMap[evidenceId];
@@ -198,13 +199,13 @@ const updateKnowledgeStateFromDialogue = (topic, revealLevel, player) => {
       knownFacts: [],
       suspectedFacts: [],
       unknownFacts: [],
-      revealLevels: { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE' }
+      revealLevels: { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE', evans: 'NONE', dmitri_memory: 'NONE' }
     };
   }
 
   const kState = player.narrativeState.knowledgeState;
   if (!kState.revealLevels) {
-    kState.revealLevels = { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE' };
+    kState.revealLevels = { aresium: 'NONE', relay7: 'NONE', isuComplicity: 'NONE', aresProtocol: 'NONE', evans: 'NONE', dmitri_memory: 'NONE' };
   }
 
   // Update level only if it is higher than the current known level

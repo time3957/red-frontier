@@ -101,7 +101,9 @@ const knowledgeStateSchema = new Schema({
     aresium: { type: String, enum: ['NONE', 'HINT', 'PARTIAL', 'DEEP', 'FULL'], default: 'NONE' },
     relay7: { type: String, enum: ['NONE', 'HINT', 'PARTIAL', 'DEEP', 'FULL'], default: 'NONE' },
     isuComplicity: { type: String, enum: ['NONE', 'HINT', 'PARTIAL', 'DEEP', 'FULL'], default: 'NONE' },
-    aresProtocol: { type: String, enum: ['NONE', 'HINT', 'PARTIAL', 'DEEP', 'FULL'], default: 'NONE' }
+    aresProtocol: { type: String, enum: ['NONE', 'HINT', 'PARTIAL', 'DEEP', 'FULL'], default: 'NONE' },
+    evans: { type: String, enum: ['NONE', 'HINT', 'PARTIAL', 'DEEP', 'FULL'], default: 'NONE' },
+    dmitri_memory: { type: String, enum: ['NONE', 'HINT', 'PARTIAL', 'DEEP', 'FULL'], default: 'NONE' }
   }
 }, { _id: false });
 

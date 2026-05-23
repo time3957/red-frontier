@@ -134,6 +134,17 @@ const evidenceData = [
     type: "audio",
     connectsTo: ["CLUE_RELAY7_FREQUENCY", "CLUE_DMITRI_REVELATION"],
     requiredClass: null
+  },
+  {
+    clueId: "CLUE_VASQUEZ_WARNING",
+    title: "คำเตือนของคนงานเกี่ยวกับ Vasquez (Vasquez Warning)",
+    description: "สัญลักษณ์และคำพูดปริศนาของคนงานที่เตือนให้ระวัง Vasquez ผู้แทนของ ISU",
+    fullText: "TRANSCRIPTION: 'อย่าไว้วางใจ Vasquez... เธอรู้... พวกเราทุกคนรู้...' ตัวหมวกมีร่องรอยสัญลักษณ์ดาวแปดแฉกวาดอยู่ด้วยเศษเลือดตกผลึก",
+    act: 1,
+    location: "Med Bay",
+    type: "personal",
+    connectsTo: ["CLUE_PROMETHEUS_WIRE", "CLUE_AZRAEL_MARK"],
+    requiredClass: null
   }
 ];
 
@@ -149,7 +160,7 @@ async function seed() {
 
     // Insert new
     await Evidence.insertMany(evidenceData);
-    console.log('✅ Successfully seeded 12 evidence documents!');
+    console.log(`✅ Successfully seeded ${evidenceData.length} evidence documents!`);
 
     process.exit(0);
   } catch (err) {

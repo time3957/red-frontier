@@ -302,8 +302,9 @@ router.post('/action', verifyToken, async (req, res) => {
     }
 
     // Recalculate evidence completion percent
+    const totalClues = await Evidence.countDocuments() || 12;
     player.narrativeState.evidenceBoard.completionPercent = Math.round(
-      (player.narrativeState.evidenceBoard.collected.length / 12) * 100
+      (player.narrativeState.evidenceBoard.collected.length / totalClues) * 100
     );
 
     player.markModified('narrativeState');
@@ -636,8 +637,9 @@ router.post('/explore', verifyToken, async (req, res) => {
         player.narrativeState.evidenceBoard.collected.push(uncollectedClue.clueId);
         const { updateKnowledgeStateFromEvidence } = require('../engine/revealControl');
         updateKnowledgeStateFromEvidence(uncollectedClue.clueId, player);
+        const totalClues = await Evidence.countDocuments() || 12;
         player.narrativeState.evidenceBoard.completionPercent = Math.round(
-          (player.narrativeState.evidenceBoard.collected.length / 12) * 100
+          (player.narrativeState.evidenceBoard.collected.length / totalClues) * 100
         );
         player.markModified('narrativeState');
         await player.save();
