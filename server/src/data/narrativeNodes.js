@@ -532,66 +532,103 @@ const narrativeNodes = [
       'UNAUTHORIZED DATA ACCESS DETECTED\n' +
       'UNIT DESIGNATION: [YOUR_ID]\n' +
       'RESPONSE TEAM DISPATCHED — ETA: 4 MINUTES\n\n' +
-      'สี่นาที คุณมีสี่นาทีก่อนที่ Strike Team จะมาถึง',
+      'หัวใจของคุณเต้นแรง มือสั่นเล็กน้อย\n' +
+      'สี่นาที ยังไม่แน่ใจว่าพวกเขาจะทำอะไร — แต่คำว่า "Response Team" ไม่ใช่ข่าวดี',
     choices: [
       {
-        choiceId: 'CHOICE_DATA_FIGHT',
-        text: 'เตรียมอาวุธและรับมือกับ Strike Team',
+        choiceId: 'CHOICE_DATA_ASSESS',
+        text: 'ตั้งสติ — ตรวจ HUD และหาทางออกฉุกเฉิน (WIS DC 10)',
+        actionType: 'investigation',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
-        dcCheck: null,
+        dcCheck: { stat: 'wis', dc: 10 },
         outcomes: {
           success: {
-            nextNodeId: 'NODE_COMBAT_STRIKE_TEAM',
+            nextNodeId: 'NODE_ESCAPE_TUNNEL',
             narrative:
-              'คุณตรวจสอบอาวุธและหาตำแหน่งป้องกัน\n\n' +
-              'ถ้าพวกเขาต้องการข้อมูลนี้ — พวกเขาต้องผ่านคุณไปก่อน',
+              'คุณบังคับตัวเองให้หายใจช้าลง\n\n' +
+              'HUD แสดงแผนผังฐาน — Maintenance Tunnel B-12 อยู่ห่างออกไป 40 เมตร ' +
+              'ไม่ผ่านทางเดินหลัก ไม่มีกล้อง\n\n' +
+              'คุณจดจำเส้นทางและเริ่มเคลื่อนตัวอย่างระมัดระวัง ' +
+              'แต่ละก้าวย่างแข่งกับเวลาที่หมดลงทีละวินาที',
+            stateChanges: { xp: 50 }
+          },
+          failure: {
+            nextNodeId: 'NODE_ESCAPE_TUNNEL',
+            narrative:
+              'มือสั่น HUD เบลอ — คุณกดหน้าจอผิดสองครั้งก่อนจะเปิดแผนผังได้\n\n' +
+              'แต่ก็เพียงพอ — คุณเห็นทาง Maintenance Tunnel B-12\n\n' +
+              'คุณวิ่งไปโดยไม่สนใจเสียงฝีเท้าที่เริ่มดังขึ้นจากทางเดินหลัก',
             stateChanges: {}
           }
         }
       },
       {
         choiceId: 'CHOICE_DATA_STEALTH',
-        text: 'หลบหนีผ่าน Maintenance Tunnel (DEX DC 13)',
+        text: 'ไม่รอแล้ว — หลบหนีผ่าน Maintenance Tunnel ทันที (DEX DC 13)',
+        actionType: 'survival',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: { stat: 'dex', dc: 13 },
         outcomes: {
           success: {
             nextNodeId: 'NODE_ESCAPE_TUNNEL',
             narrative:
-              'คุณรู้จักฐานนี้ดีพอ — ช่อง Maintenance Tunnel B-12 ' +
-              'เชื่อมกับส่วนล่างของฐานโดยไม่ผ่านทางเดินหลัก\n\n' +
-              'คุณลื่นเข้าไปในความมืด ประตูปิดหลังคุณเงียบสนิท',
-            stateChanges: { xp: 50 }
+              'สัญชาตญาณบอกว่าอย่ารอ — คุณเคยเห็นช่อง Maintenance Tunnel B-12 ตอนเดินผ่าน\n\n' +
+              'คุณลื่นเข้าไปในความมืด ประตูปิดหลังคุณเงียบสนิท\n\n' +
+              'เสียงฝีเท้าหนักดังขึ้นจากทางเดินหลักเพียงไม่กี่วินาทีหลังจากนั้น',
+            stateChanges: { xp: 75 }
           },
           failure: {
             nextNodeId: 'NODE_PROMETHEUS_ALERT',
             narrative:
-              'เท้าของคุณพลาดขั้นบันได เสียงดังก้อง\n\n' +
-              '"นั่นมัน! ทางนั้น!" — เสียงตะโกนดังขึ้น\n\n' +
-              'คุณวิ่งแต่พวกเขาวิ่งเร็วกว่า',
+              'คุณวิ่งไปที่ Tunnel — แต่ประตูถูกล็อก!\n\n' +
+              'มือสั่นกดรหัส Override ผิดสองครั้ง\n\n' +
+              'เสียงก้าวเท้าหยุดอยู่ข้างหลังคุณ\n\n' +
+              '"อย่าเคลื่อนไหว"',
             stateChanges: {}
           }
         }
       },
       {
         choiceId: 'CHOICE_DATA_TRANSMIT',
-        text: 'ส่งข้อมูลไปยัง ISU HQ ก่อนที่ใครจะหยุดได้',
+        text: 'ส่งหรือซ่อนข้อมูลก่อน — ถ้าพวกเขาจับได้ อย่างน้อยข้อมูลต้องรอด (INT DC 11)',
+        actionType: 'investigation',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: { stat: 'int', dc: 11 },
         outcomes: {
           success: {
             nextNodeId: 'NODE_PROMETHEUS_ALERT',
             narrative:
-              'คุณเข้ารหัสแพ็กเกจข้อมูลและส่งผ่าน Deep Space Relay\n\n' +
-              'ข้อมูลออกไปแล้ว — แต่ Prometheus ก็รู้ว่าคุณส่งอะไรออกไป\n\n' +
-              'ISU จะมาหาคุณ แต่ Prometheus มาถึงก่อน',
+              'นิ้วแล่นบนหน้าจอ — คุณเข้ารหัสแพ็กเกจข้อมูลและส่งผ่าน Deep Space Relay\n\n' +
+              'สัญญาณยืนยัน: ข้อมูลออกไปแล้ว\n\n' +
+              'แต่ Log การส่งปรากฏบนระบบ Prometheus เช่นกัน — พวกเขารู้ว่าคุณส่งอะไรออกไป\n\n' +
+              'เสียงฝีเท้าดังขึ้นจากทางเดิน',
             stateChanges: { isu: 15, prometheus: -20, xp: 75 }
           },
           failure: {
             nextNodeId: 'NODE_PROMETHEUS_ALERT',
             narrative:
-              'สัญญาณถูกบล็อก — Prometheus ตั้ง Signal Jammer แล้ว\n\n' +
-              'ข้อมูลยังอยู่กับคุณ แต่เวลากำลังจะหมด',
+              'สัญญาณถูกบล็อก — ระบบ Jammer ทำงานอยู่\n\n' +
+              'คุณพยายามเข้ารหัสและซ่อนข้อมูลใน Buffer ของชุดอวกาศแทน\n\n' +
+              'หวังว่าจะพอ... เสียงฝีเท้าหนักดังขึ้นจากปลายทางเดิน',
+            stateChanges: {}
+          }
+        }
+      },
+      {
+        choiceId: 'CHOICE_DATA_BRACE',
+        text: 'เตรียมป้องกันตัว — ถ้าเลี่ยงการเผชิญหน้าไม่ได้แล้ว',
+        actionType: 'combat',
+        requirements: { class: null, minStat: null, factionRep: null, evidence: null },
+        dcCheck: null,
+        outcomes: {
+          success: {
+            nextNodeId: 'NODE_COMBAT_STRIKE_TEAM',
+            narrative:
+              'ไม่มีทางออก ไม่มีเวลาหนี\n\n' +
+              'คุณมองหาสิ่งที่ใช้ป้องกันตัวได้ — ท่อเหล็ก เครื่องมือซ่อมบำรุง ' +
+              'หรืออาวุธที่มีอยู่\n\n' +
+              'มือยังสั่นอยู่ แต่ไม่เท่ากับกลัวสิ่งที่ "การดูแล" ของ Prometheus หมายถึง\n\n' +
+              'คุณหาตำแหน่งกำบังและรอ',
             stateChanges: {}
           }
         }
@@ -609,76 +646,113 @@ const narrativeNodes = [
   // ──────────────────────────────────────────────────────────────────────────
   {
     nodeId: 'NODE_PROMETHEUS_ALERT',
-    title: 'Prometheus Strike Team — ล่าคุณ',
+    title: 'การเผชิญหน้า — ทีมรักษาความปลอดภัย',
     location: 'ares_base_i',
     atmosphere: 'action',
     narrative:
       'เสียงก้าวเท้าที่หนักและเป็นจังหวะดังมาจากทางเดิน\n\n' +
-      '3 นายทหาร Prometheus Corp ติดอาวุธครบครัน ชุดอวกาศสีดำพร้อมโล่ SI หนา ' +
-      'บุกเข้ามาในพื้นที่ของคุณ\n\n' +
+      'ชุดเกราะสีดำสามชุดปรากฏที่ปลายทางเดิน — ติดอาวุธ พร้อมโล่ SI หนา ' +
+      'ตราสัญลักษณ์ Prometheus Corp บนไหล่\n\n' +
       'หัวหน้าทีมพูดผ่าน Comms ที่เปิดให้ทุกคนได้ยิน:\n' +
       '"บุคคลที่เข้าถึงข้อมูลลับของ Prometheus Corp — วางอาวุธ ' +
       'คุณจะได้รับการดูแล"\n\n' +
-      'น้ำเสียงเย็นชาบอกทุกอย่างที่ต้องรู้เกี่ยวกับ "การดูแล" นั้น',
+      'น้ำเสียงเย็นชา ปลายกระบอกปืนชี้ลงพื้น — ยังไม่ได้ยกขึ้น แต่นิ้วอยู่บนไก\n\n' +
+      'ร่างกายของคุณเกร็ง ใจเต้นถี่ มองหาทางออกโดยสัญชาตญาณ',
     choices: [
       {
-        choiceId: 'CHOICE_ALERT_FIGHT',
-        text: 'สู้! (นำไปสู่ Combat)',
+        choiceId: 'CHOICE_ALERT_RETREAT',
+        text: 'ถอยหลังช้าๆ ขณะประเมินว่าพวกเขาต้องการอะไร',
+        actionType: 'survival',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
-        dcCheck: null,
+        dcCheck: { stat: 'wis', dc: 11 },
         outcomes: {
           success: {
+            nextNodeId: 'NODE_ESCAPE_TUNNEL',
+            narrative:
+              'คุณยกมือขึ้นช้าๆ และถอยหลังทีละก้าว\n\n' +
+              'สายตาของหัวหน้าทีมจับอยู่ที่คุณ แต่ลูกทีมคนหนึ่งเหลือบไปทางอื่นชั่วครู่ — ' +
+              'มุมตายข้างทางเดินย่อยอยู่ห่างไปสองก้าว\n\n' +
+              'คุณพุ่งเข้าไปในทางเดินย่อย ประตู Emergency ปิดลงพอดี ' +
+              'กระสุนกระทบโลหะหลังคุณ — แต่สายเกินไปสำหรับพวกเขาแล้ว',
+            stateChanges: { xp: 75 }
+          },
+          failure: {
             nextNodeId: 'NODE_COMBAT_STRIKE_TEAM',
-            narrative: 'คุณชักอาวุธขึ้น — ไม่มีทางถอยแล้ว',
+            narrative:
+              'คุณถอยหลัง — แต่เท้าสะดุดขอบท่อที่วางอยู่บนพื้น\n\n' +
+              'เสียงดังทำให้ลูกทีมทุกคนยกปืนขึ้นพร้อมกัน\n\n' +
+              '"อยู่กับที่!" — แต่ตอนนี้มันสายเกินไปที่จะอยู่นิ่งแล้ว',
             stateChanges: {}
           }
         }
       },
       {
         choiceId: 'CHOICE_ALERT_NEGOTIATE',
-        text: 'เจรจาและแกล้งทำเป็นว่าเป็นความเข้าใจผิด (CHA DC 14)',
+        text: 'ยกมือขึ้นและลองพูดคุย — ประเมินว่าพวกเขาจะทำร้ายจริงหรือแค่ขู่ (CHA DC 14)',
+        actionType: 'dialogue',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: { stat: 'cha', dc: 14 },
         outcomes: {
           success: {
             nextNodeId: 'NODE_ESCAPE_TUNNEL',
             narrative:
-              '"ฉันเป็นแค่ช่างซ่อม... ระบบมัน Ping ผิดพลาด"\n\n' +
+              '"ใจเย็นนะ... ฉันแค่ทำงานอยู่ ระบบมัน Ping ผิดพลาด"\n\n' +
               'หัวหน้าทีมมองคุณ 3 วินาทีที่รู้สึกเหมือน 3 ชั่วโมง\n\n' +
               '"ตรวจสอบ" เขาพูดกับลูกน้อง\n\n' +
               'ขณะที่ลูกน้องแยกย้ายออกไปตรวจ คุณเดินออกไปอย่างใจเย็น ' +
-              'แล้ววิ่งทันทีที่พ้นสายตา',
+              'แล้ววิ่งทันทีที่พ้นสายตา ขาสั่นแต่ยังวิ่งได้',
             stateChanges: { xp: 100 }
           },
           failure: {
             nextNodeId: 'NODE_COMBAT_STRIKE_TEAM',
             narrative:
               '"เราไม่ได้มาคุย" หัวหน้าทีมกล่าว\n\n' +
-              'มือของเขาขยับไปที่อาวุธ',
+              'มือของเขาขยับไปที่อาวุธ น้ำเสียงไม่มีร่องรอยของการเจรจา',
             stateChanges: {}
           }
         }
       },
       {
         choiceId: 'CHOICE_ALERT_RUN',
-        text: 'วิ่งหนีโดยไม่ลังเล',
+        text: 'หันหลังวิ่ง — สัญชาตญาณเอาตัวรอดเหนือกว่าเหตุผล (DEX DC 12)',
+        actionType: 'survival',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: { stat: 'dex', dc: 12 },
         outcomes: {
           success: {
             nextNodeId: 'NODE_ESCAPE_TUNNEL',
             narrative:
-              'คุณหันหลังและวิ่งเต็มสปีด — ชุดอวกาศบูสต์ระบบมอเตอร์\n\n' +
-              'กระสุนกระทบผนังข้างๆ คุณ\n\n' +
-              'คุณเลี้ยวเข้าทางเดินย่อย ประตู Emergency ปิดข้างหลังคุณ',
+              'ร่างกายเคลื่อนก่อนที่สมองจะตัดสินใจ — คุณหันหลังและวิ่งเต็มสปีด\n\n' +
+              'ชุดอวกาศบูสต์ระบบมอเตอร์ช่วย กระสุนกระทบผนังข้างๆ คุณ\n\n' +
+              'คุณเลี้ยวเข้าทางเดินย่อย ประตู Emergency ปิดข้างหลังคุณ\n\n' +
+              'หายใจหอบ มือสั่น — แต่ยังมีชีวิตอยู่',
             stateChanges: {}
           },
           failure: {
             nextNodeId: 'NODE_COMBAT_STRIKE_TEAM',
             narrative:
-              'กระสุน Stun ระเบิดที่เท้าคุณ — คุณล้มลงแต่ยังไม่หมดสติ\n\n' +
-              'พวกเขากำลังเดินเข้ามา',
+              'กระสุน Stun ระเบิดที่เท้าคุณ — ขาชาไปครึ่งหนึ่ง คุณล้มลงแต่ยังรู้สึกตัว\n\n' +
+              'เสียงฝีเท้าเข้ามาใกล้\n\n' +
+              'ถ้าจะรอด ต้องสู้',
             stateChanges: { currentHP: -10 }
+          }
+        }
+      },
+      {
+        choiceId: 'CHOICE_ALERT_FIGHT',
+        text: 'ไม่มีทางหนี — ตั้งรับและสู้ถ้าถูกบีบจนมุม',
+        actionType: 'combat',
+        requirements: { class: null, minStat: null, factionRep: null, evidence: null },
+        dcCheck: null,
+        outcomes: {
+          success: {
+            nextNodeId: 'NODE_COMBAT_STRIKE_TEAM',
+            narrative:
+              'ไม่มีทางออก ไม่มีเวลาเจรจา\n\n' +
+              'คุณมองหาสิ่งที่ใช้ป้องกันตัว — ท่อเหล็ก ชั้นเก็บของ อะไรก็ได้\n\n' +
+              'มือหยุดสั่นเมื่อรู้ว่าไม่มีทางเลือกอื่น\n\n' +
+              'อะดรีนาลีนเข้ามาแทนที่ความกลัว',
+            stateChanges: {}
           }
         }
       }
@@ -818,59 +892,84 @@ const narrativeNodes = [
       'สัญญาณตัดหายไปราวกับไม่เคยมีอยู่',
     choices: [
       {
-        choiceId: 'CHOICE_RELAY_TRUST',
-        text: 'ตัดสินใจไปหา Yara ตามที่ RELAY-7 บอก',
+        choiceId: 'CHOICE_RELAY_FREEZE',
+        text: 'ยืนนิ่ง — พยายามทำความเข้าใจกับสิ่งที่เพิ่งเกิดขึ้น',
+        actionType: 'investigation',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: null,
         outcomes: {
           success: {
             nextNodeId: 'NODE_WARRENS_ENTRANCE',
             narrative:
-              'ไม่มีทางเลือกมากนักในตอนนี้\n\n' +
-              'Prometheus ไล่ล่า ISU อาจไม่น่าไว้วางใจ\n\n' +
-              'และ RELAY-7 รู้บางอย่างที่คุณยังไม่รู้\n\n' +
-              'คุณหันหน้าไปทาง Warrens',
-            stateChanges: { relayAgendaSuspected: true, forgotten: 5 }
+              'ใจสั่น มือชา\n\n' +
+              'นั่นคืออะไร? สัญญาณจาก... ดาวเทียม? เสียงนั้นไม่ใช่มนุษย์ แต่ก็ไม่ใช่แค่เครื่องจักร\n\n' +
+              'คุณยืนอยู่กลางทะเลทรายสีแดง พยายามจับความคิดให้เป็นระบบ\n\n' +
+              'สิ่งเดียวที่ชัดเจนคือ: Prometheus กำลังตามมา ' +
+              'และเสียงนั้นบอกให้ไปหา "Yara ที่ Warrens"\n\n' +
+              'ตอนนี้ยังไม่รู้ว่าจะเชื่อใคร — แต่ต้องเคลื่อนตัวก่อน',
+            stateChanges: { relayAgendaSuspected: true }
           }
         }
       },
       {
         choiceId: 'CHOICE_RELAY_RECORD',
-        text: 'บันทึกการสนทนาและวิเคราะห์สัญญาณ (INT DC 12)',
+        text: 'บันทึกสัญญาณและวิเคราะห์ — ต้องมีหลักฐาน (INT DC 12)',
+        actionType: 'investigation',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: { stat: 'int', dc: 12 },
         outcomes: {
           success: {
             nextNodeId: 'NODE_WARRENS_ENTRANCE',
             narrative:
-              'คุณบันทึกสัญญาณได้ก่อนที่มันจะตัดไป\n\n' +
-              'การวิเคราะห์เบื้องต้น: ไม่ใช่ AI ธรรมดา แพทเทิร์นการพูดซับซ้อนเกินไป ' +
-              'และมีการใช้ภาษาที่แสดงถึงความเข้าใจเชิงอารมณ์\n\n' +
-              'คุณบันทึกหลักฐานชิ้นสำคัญ',
+              'แม้จะตกใจ แต่สัญชาตญาณทำงาน — คุณกดบันทึกสัญญาณก่อนที่มันจะตัดไป\n\n' +
+              'การวิเคราะห์เบื้องต้นทำให้ขนลุก: ไม่ใช่ AI ธรรมดา ' +
+              'แพทเทิร์นการพูดซับซ้อนเกินไป และมีร่องรอยของความเข้าใจเชิงอารมณ์\n\n' +
+              'คุณมีหลักฐาน — แต่หลักฐานของอะไร?\n\n' +
+              'ไม่ว่าจะเชื่อหรือไม่ ต้องหาที่ปลอดภัยก่อน Warrens คือทางเลือกเดียว',
             stateChanges: { addEvidence: 'CLUE_RELAY7_CONTACT', xp: 100 }
           },
           failure: {
             nextNodeId: 'NODE_WARRENS_ENTRANCE',
             narrative:
-              'ระบบบันทึกไม่จับสัญญาณได้ — มันเข้ารหัสในรูปแบบที่อุปกรณ์มาตรฐานไม่รู้จัก\n\n' +
-              'คุณมีเพียงความทรงจำ',
+              'มือสั่น ระบบบันทึกไม่จับสัญญาณได้ — มันเข้ารหัสในรูปแบบที่อุปกรณ์มาตรฐานไม่รู้จัก\n\n' +
+              'คุณมีเพียงความทรงจำที่ยังสดใหม่และน่ากลัว\n\n' +
+              'Prometheus ตามมา — ต้องเคลื่อนตัว',
             stateChanges: { relayAgendaSuspected: true }
           }
         }
       },
       {
-        choiceId: 'CHOICE_RELAY_SUSPICIOUS',
-        text: 'ไม่ไว้วางใจ RELAY-7 — ไปหา ISU แทน',
+        choiceId: 'CHOICE_RELAY_TRUST',
+        text: 'ไม่มีทางเลือกมาก — ไปหา Yara ที่ Warrens ตามที่เสียงนั้นบอก',
+        actionType: 'progress_story',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: null,
         outcomes: {
           success: {
             nextNodeId: 'NODE_WARRENS_ENTRANCE',
             narrative:
-              'คุณตัดสินใจไม่ตามคำสั่งของเสียงปริศนา\n\n' +
-              'แต่ ISU อยู่ที่ไหน? ตัวแทน ISU ที่ใกล้ที่สุดในฐานคือ... ใคร?\n\n' +
-              'ระหว่างที่คุณคิด Prometheus กำลังตามมา\n' +
-              'ทาง Warrens ยังคงเป็นทางเดียวที่ปลอดภัย',
+              'ไม่รู้ว่าเสียงนั้นคืออะไร และไม่แน่ใจว่าควรเชื่อ\n\n' +
+              'แต่ Prometheus ไล่ล่า ISU อาจไม่น่าไว้วางใจ\n\n' +
+              'และเสียงนั้น... มันรู้ชื่อคุณ มันรู้ว่าคุณพบอะไร\n\n' +
+              'ตอนนี้ Warrens เป็นทางเลือกที่เลวร้ายน้อยที่สุด',
+            stateChanges: { relayAgendaSuspected: true, forgotten: 5 }
+          }
+        }
+      },
+      {
+        choiceId: 'CHOICE_RELAY_SUSPICIOUS',
+        text: 'ไม่ไว้วางใจเสียงปริศนา — ต้องหาทางกลับหาคนที่เชื่อถือได้',
+        actionType: 'progress_story',
+        requirements: { class: null, minStat: null, factionRep: null, evidence: null },
+        dcCheck: null,
+        outcomes: {
+          success: {
+            nextNodeId: 'NODE_WARRENS_ENTRANCE',
+            narrative:
+              'ไม่ — คุณจะไม่ทำตามคำสั่งของเสียงที่ไม่รู้จัก\n\n' +
+              'แต่ ISU อยู่ที่ไหน? ตัวแทน ISU ที่ใกล้ที่สุดคือ... ใคร?\n\n' +
+              'ระหว่างที่คุณคิด สัญญาณ Prometheus ปรากฏบน HUD — ใกล้เข้ามา\n\n' +
+              'ทาง Warrens ยังคงเป็นที่เดียวที่ Prometheus ไม่กล้าบุก',
             stateChanges: { isu: 5, relayAgendaSuspected: true }
           }
         }
@@ -946,7 +1045,7 @@ const narrativeNodes = [
       },
       {
         choiceId: 'CHOICE_WARRENS_FORCE',
-        text: 'ผลักผ่านด้วยกำลัง — ไม่มีเวลาเจรจา (STR DC 14)',
+        text: 'ดันผ่านด้วยความสิ้นหวัง — ถูกไล่ล่ามาจนไม่มีแรงเจรจาแล้ว (STR DC 14)',
         requirements: { class: null, minStat: null, factionRep: null, evidence: null },
         dcCheck: { stat: 'str', dc: 14 },
         outcomes: {
